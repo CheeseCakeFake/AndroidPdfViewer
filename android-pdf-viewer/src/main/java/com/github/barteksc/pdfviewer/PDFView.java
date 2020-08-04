@@ -245,7 +245,8 @@ public class PDFView extends RelativeLayout {
     public PDFView(Context context, AttributeSet set) {
         super(context, set);
 
-        renderingHandlerThread = new HandlerThread("PDF renderer");
+        //Todo this causes null pointer exception move to onAttachedToWindow()
+        //renderingHandlerThread = new HandlerThread("PDF renderer");
 
         if (isInEditMode()) {
             return;
@@ -474,6 +475,14 @@ public class PDFView extends RelativeLayout {
             renderingHandlerThread = null;
         }
         super.onDetachedFromWindow();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+
+        renderingHandlerThread = new HandlerThread("PDF renderer");
+
+        super.onAttachedToWindow();
     }
 
     @Override
