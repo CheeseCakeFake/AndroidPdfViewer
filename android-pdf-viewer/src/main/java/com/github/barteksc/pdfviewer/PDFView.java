@@ -901,6 +901,15 @@ public class PDFView extends RelativeLayout {
         redraw();
     }
 
+
+    public void moveUnsafeTo(float offsetX, float offsetY) {
+
+        currentXOffset = offsetX;
+        currentYOffset = offsetY;
+
+        redraw();
+    }
+
     void loadPageByOffset() {
         if (0 == pdfFile.getPagesCount()) {
             return;
