@@ -919,6 +919,10 @@ public class PDFView extends RelativeLayout {
         redraw();
     }
 
+    public float getDocLen(){
+        return pdfFile.getDocLen(zoom);
+    }
+
     void loadPageByOffset() {
         if (0 == pdfFile.getPagesCount()) {
             return;
