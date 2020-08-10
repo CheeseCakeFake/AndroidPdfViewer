@@ -916,12 +916,13 @@ public class PDFView extends RelativeLayout {
         currentXOffset = offsetX;
         currentYOffset = offsetY;
 
+        if (scrollHandle != null && !documentFitsView()) {
+            scrollHandle.setScroll(getPositionOffset());
+        }
+
         redraw();
     }
 
-    public float getDocLen(){
-        return pdfFile.getDocLen(zoom);
-    }
 
     void loadPageByOffset() {
         if (0 == pdfFile.getPagesCount()) {
