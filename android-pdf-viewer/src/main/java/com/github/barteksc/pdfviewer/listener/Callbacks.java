@@ -74,6 +74,8 @@ public class Callbacks {
      */
     private LinkHandler linkHandler;
 
+    private OnWindowVisibilityChangedListener onWindowVisibilityChangedListener;
+
     public void setOnLoadComplete(OnLoadCompleteListener onLoadCompleteListener) {
         this.onLoadCompleteListener = onLoadCompleteListener;
     }
@@ -175,6 +177,16 @@ public class Callbacks {
     public void callLinkHandler(LinkTapEvent event) {
         if (linkHandler != null) {
             linkHandler.handleLinkEvent(event);
+        }
+    }
+
+    public void setOnWindowVisibilityChangedListener(OnWindowVisibilityChangedListener listener) {
+        this.onWindowVisibilityChangedListener = listener;
+    }
+
+    public void callOnWindowVisibilityChangedListener(int visibility) {
+        if (onWindowVisibilityChangedListener != null) {
+            onWindowVisibilityChangedListener.onVisibilityChanged(visibility);
         }
     }
 }

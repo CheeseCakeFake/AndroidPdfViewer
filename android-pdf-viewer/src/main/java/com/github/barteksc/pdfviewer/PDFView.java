@@ -49,6 +49,7 @@ import com.github.barteksc.pdfviewer.listener.OnPageErrorListener;
 import com.github.barteksc.pdfviewer.listener.OnPageScrollListener;
 import com.github.barteksc.pdfviewer.listener.OnRenderListener;
 import com.github.barteksc.pdfviewer.listener.OnTapListener;
+import com.github.barteksc.pdfviewer.listener.OnWindowVisibilityChangedListener;
 import com.github.barteksc.pdfviewer.model.PagePart;
 import com.github.barteksc.pdfviewer.scroll.ScrollHandle;
 import com.github.barteksc.pdfviewer.source.AssetSource;
@@ -923,6 +924,12 @@ public class PDFView extends RelativeLayout {
         redraw();
     }
 
+    @Override
+    protected void onWindowVisibilityChanged(int visibility) {
+        super.onWindowVisibilityChanged(visibility);
+
+        this.callbacks.callOnWindowVisibilityChangedListener(visibility);
+    }
 
     void loadPageByOffset() {
         if (0 == pdfFile.getPagesCount()) {
@@ -1372,6 +1379,8 @@ public class PDFView extends RelativeLayout {
 
         private OnPageErrorListener onPageErrorListener;
 
+        private OnWindowVisibilityChangedListener onWindowVisibilityChangedListener;
+
         private LinkHandler linkHandler = new DefaultLinkHandler(PDFView.this);
 
         private int defaultPage = 0;
@@ -1474,6 +1483,11 @@ public class PDFView extends RelativeLayout {
             return this;
         }
 
+        public Configurator onWindowVisibilityChanged(OnWindowVisibilityChangedListener listener) {
+            this.onWindowVisibilityChangedListener = listener;
+            return this;
+        }
+
         public Configurator linkHandler(LinkHandler linkHandler) {
             this.linkHandler = linkHandler;
             return this;
@@ -1561,6 +1575,7 @@ public class PDFView extends RelativeLayout {
             PDFView.this.callbacks.setOnLongPress(onLongPressListener);
             PDFView.this.callbacks.setOnPageError(onPageErrorListener);
             PDFView.this.callbacks.setLinkHandler(linkHandler);
+            PDFView.this.callbacks.setOnWindowVisibilityChangedListener(onWindowVisibilityChangedListener);
             PDFView.this.setSwipeEnabled(enableSwipe);
             PDFView.this.setNightMode(nightMode);
             PDFView.this.enableDoubletap(enableDoubletap);
